@@ -4,26 +4,22 @@ docker-virtuoso
 A Dockerized Virtuoso.
 
 ```
-$ docker build -t virtuoso:7.1.0 .
+$ docker build -t virtuoso:7.2.0 .
 ```
 
 ## Start a container
 
-To persiste the data on the host's filesystem, create the folder (eg: `/virtuoso-data`), copy the `virtuoso.ini` in it and run the contaner:
-
 ```
- $ docker run -d -p 8890:8890 -p 1111:1111 --name virtuoso -v /virtuoso-data:/home/virtuoso/virtuoso/var/lib/virtuoso/db virtuoso:7.1.0
+ $ docker run -d -p 127.0.0.1:8890:8890 --name virtuoso1 virtuoso:7.2.0
 ```
 
-## Set a password:
+## Differences from [namlook/docker-virtuoso](https://github.com/namlook/docker-virtuoso)
 
-```
-$ isql -H <virtuoso-container-ip> exec='set password dba abetterpassword;'
-```
+- Use ubuntu:14.04.2 as a base image.
+- Install latest stable virtuoso 7 by using git command instead of downloading zip file.
+- Install to default path (/usr/local/virtuoso-opensource/) and use default .ini file.
+- Doesn't expose ports directly. (See: [Viktor's ramblings • The dangers of UFW + Docker](http://blog.viktorpetersson.com/post/101707677489/the-dangers-of-ufw-docker "Viktor's ramblings • The dangers of UFW + Docker"))
 
-## Enable SPARQL_UPDATE
+## More info
 
-```
-$ isql -P abetterpassword -H <virtuoso-container-ip> exec='grant SPARQL_UPDATE to "SPARQL";'
-```
-
+- [Virtuoso を Docker で運用 - Drafts](http://cm3.hateblo.jp/entry/2015/04/06/023729 "Virtuoso を Docker で運用 - Drafts") (Japanese)

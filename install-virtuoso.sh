@@ -1,12 +1,10 @@
-#!/bin/bash
-if [ ! -f virtuoso-opensource-7.1.0.zip ]; then
-    wget https://github.com/openlink/virtuoso-opensource/archive/v7.1.0.zip -O virtuoso-opensource-7.1.0.zip
-fi
-unzip virtuoso-opensource-7.1.0.zip
-mkdir virtuoso
-cd virtuoso-opensource-7.1.0
+git clone https://github.com/openlink/virtuoso-opensource.git
+cd virtuoso-opensource
+git branch stable/7 origin/stable/7
+git checkout stable/7
 ./autogen.sh
-./configure --prefix=/home/virtuoso/virtuoso
+./configure --with-readline
 make
 make install
-mkdir /home/virtuoso/virtuoso/share/data
+chown -R virtuoso/virtuoso /usr/local/virtuoso-opensource/
+mkdir -p /usr/local/virtuoso-opensource/lib/virtuoso/hosting
