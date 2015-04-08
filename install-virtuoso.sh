@@ -6,5 +6,5 @@ git checkout stable/7
 ./configure --with-readline
 make
 make install
-chown -R virtuoso/virtuoso /usr/local/virtuoso-opensource/
 mkdir -p /usr/local/virtuoso-opensource/lib/virtuoso/hosting
+chown -R virtuoso/virtuoso /usr/local/virtuoso-opensource/
