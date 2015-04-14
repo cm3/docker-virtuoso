@@ -3,6 +3,8 @@ docker-virtuoso
 
 A Dockerized Virtuoso.
 
+## Build an image
+
 ```
 $ docker build -t virtuoso:7.2.0 .
 ```
