@@ -17,14 +17,24 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	libssl-dev \
         libreadline-gplv2-dev
 
-RUN adduser --disabled-password --home=/home/virtuoso --gecos "" virtuoso
-
-ADD ./install-virtuoso.sh /home/virtuoso/
-
-RUN chmod +x /home/virtuoso/install-virtuoso.sh
-RUN chown -R virtuoso:virtuoso /home/virtuoso
+RUN adduser --disabled-password --home=/home/virtuoso --gecos "" virtuoso && \
+    chown -R virtuoso:virtuoso /home/virtuoso
 
 WORKDIR /home/virtuoso
-RUN /bin/bash -c "source /home/virtuoso/install-virtuoso.sh"
+
+RUN git clone https://github.com/openlink/virtuoso-opensource.git
+
+WORKDIR /home/virtuoso/virtuoso-opensource
+
+RUN git branch stable/7 origin/stable/7 && \
+    git checkout stable/7 && \
+    ./autogen.sh && \
+    ./configure --with-readline && \
+    make && \
+    make install && \
+    mkdir -p /usr/local/virtuoso-opensource/lib/virtuoso/hosting && \
+    chown -R virtuoso:virtuoso /usr/local/virtuoso-opensource/
+
 USER virtuoso
+
 CMD /usr/local/virtuoso-opensource/bin/virtuoso-t -f -c /usr/local/virtuoso-opensource/var/lib/virtuoso/db/virtuoso.ini
