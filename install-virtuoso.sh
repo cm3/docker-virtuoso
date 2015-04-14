@@ -7,4 +7,4 @@ git checkout stable/7
 make
 make install
 mkdir -p /usr/local/virtuoso-opensource/lib/virtuoso/hosting
-chown -R virtuoso/virtuoso /usr/local/virtuoso-opensource/
+chown -R virtuoso:virtuoso /usr/local/virtuoso-opensource/

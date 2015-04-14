@@ -5,7 +5,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get update && \
   apt-get -y upgrade && \
   apt-get -y install \
-    git \
+        git \
 	automake \
 	autoconf \
 	bison \
@@ -15,6 +15,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	libtool \
 	build-essential \
 	libssl-dev \
+        libreadline-gplv2-dev
 
 RUN adduser --disabled-password --home=/home/virtuoso --gecos "" virtuoso
 
@@ -24,7 +25,6 @@ RUN chmod +x /home/virtuoso/install-virtuoso.sh
 RUN chown -R virtuoso:virtuoso /home/virtuoso
 
 WORKDIR /home/virtuoso
-RUN su - virtuoso -c "/home/virtuoso/install-virtuoso.sh"
-
+RUN /bin/bash -c "source /home/virtuoso/install-virtuoso.sh"
 USER virtuoso
 CMD /usr/local/virtuoso-opensource/bin/virtuoso-t -f -c /usr/local/virtuoso-opensource/var/lib/virtuoso/db/virtuoso.ini
